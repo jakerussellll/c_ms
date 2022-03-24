@@ -9,6 +9,5 @@ class Controller {
   public function __construct($controller, $action) {
     $this->__controllerName = $controller;
     $this->__actionName = $action;
-    var_dump($controller);
   }
 }
