@@ -2,11 +2,10 @@
 
 namespace Core;
 
-use App\Controllers\BlogController;
-
 class Router {
+
   public static function route($url) {
-    $urlParts = explode('/', $url);
+      $urlParts = explode('/', $url);
 
     // Set Controller
     $controller = !empty($urlParts[0])? $urlParts[0] : Config::get('default_controller');
@@ -21,9 +20,15 @@ class Router {
     array_shift($urlParts);
 
 
+    if(!class_exists($controller)) {
+      throw new \Exception("The controller \"{$controllerName}\" does not exist.");
+    }
     $controllerClass = new $controller($controllerName, $actionName);
+
+    if(!method_exists($controllerClass, $action)) {
+      throw new \Exception("The method \"{$action}\" does not exist on the \"{$controller}\" controller.");
+    }
     call_user_func_array([$controllerClass, $action], $urlParts);
-
-
+    
   }
 }

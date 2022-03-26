@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 use \Core\{Config, Router};
 
 //define constants
